@@ -1,11 +1,17 @@
+"""task2 """
 import json
-
 def read_file(file):
+    """
+    Reads the file and parses the dictionary or list with info.
+    """
     with open(file, "r") as file:
         line = json.load(file)
     return line
 
 def organise_data(line):
+    """
+    Reads the line and navigates through it's information.
+    """
     if isinstance(line, list):
         print("""This is a list. Show all list or one element?
         s - show all
@@ -30,8 +36,8 @@ def organise_data(line):
             print("please, enter the right value")
             answer2 = input(">>> ")
             if answer2 in line.keys():
-                print(line[answer2].keys())
-                organise_data(line)
+                print(line[answer2])
+                organise_data(line[answer2])
             elif answer2 == "s":
                 print(line.keys())
                 organise_data(line)
@@ -41,6 +47,14 @@ def organise_data(line):
         repeat_dict(line)
 
 if __name__ == "__main__":
-    file = '/Users/mskoropad/OPlabs/OPlabs2/lab2task3/task3_twitter_api/twitter_json/frienfs_list_Obama.json'
-    read_file(file)
-    organise_data(read_file(file))
+    print("Enter path to your file")
+    try:
+        file = input(">>> ")
+        read_file(file)
+        organise_data(read_file(file))
+    except FileNotFoundError and FileExistsError:
+        print('Oops, no file')
+        quit()
+    except Exception:
+        print("Something else went wrong, now think about your behavior")
+        quit()
